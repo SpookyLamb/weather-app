@@ -11,8 +11,48 @@
     <link rel="stylesheet" href="./css/style.css">
   </head>
   <body class="bg-primary">
-    <div id="app">
-      <h1>Hello!</h1>
+    <div id="app" class="container bg-secondary vh-100">
+      
+      <div class="row">
+        <h1>Weather App</h1>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="zip-input">ZIP Code:</label>
+          <input type="text" id="zip-input">
+        </div>
+        <div class="col">
+          <button type="button" id="weather-button" class="btn btn-primary">Get Weather</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 bg-danger d-flex justify-content-evenly flex-column" id="weather-box">
+          <div class="row">
+            <div class="row bg-warning">City</div>
+            <div class="row" id="city-box"></div>
+          </div>
+
+          <div class="row">
+            <div class="row bg-warning">Temperature</div>
+            <div class="row">
+              <div class="col-4" id="k-box"></div>
+              <div class="col-4" id="c-box"></div>
+              <div class="col-4" id="f-box"></div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="row bg-warning">Condition</div>
+            <div class="row" id="condition-box"></div>
+          </div>
+          
+          <div class="row">
+            <div class="row bg-warning">Other Info</div>
+            <div class="row" id="icon-box"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- BootStrap JavaScript -->
@@ -21,6 +61,6 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/9e24421ae4.js" crossorigin="anonymous"></script>
     <!-- project JavaScript -->
-    <script type="module" src="/js/main.js"></script>
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>
