@@ -10,8 +10,8 @@
     <!-- project styles -->
     <link rel="stylesheet" href="./css/style.css">
   </head>
-  <body class="bg-primary">
-    <div id="app" class="container bg-secondary vh-100">
+  <body>
+    <div id="app" class="container bg-white vh-100">
       
       <div class="row">
         <h1>Weather App</h1>
@@ -28,36 +28,36 @@
       </div>
 
       <div class="row d-flex flex-column weather-wrapper">
-        <div class="container bg-danger d-flex flex-fill justify-content-around flex-column border border-dark weather-box" id="weather-box">
+        <div class="container d-flex flex-fill justify-content-start flex-column weather-box" id="weather-box">
           <div class="row">
             <div class="container display-box">
-              <div class="row bg-warning">City</div>
-              <div class="row" id="city-box"></div>
+              <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">City</div>
+              <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text" id="city-box"></div>
             </div>
           </div>
 
           <div class="row">
             <div class="container display-box">
-              <div class="row bg-warning">Temperature</div>
-              <div class="row">
-                <div class="col-4" id="k-box"></div>
-                <div class="col-4" id="c-box"></div>
-                <div class="col-4" id="f-box"></div>
+              <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Temperature</div>
+              <div class="row bg-white my-sub-border">
+                <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text" id="k-box"></div>
+                <div class="col-4 d-flex justify-content-center align-items-center border-center text-center align-middle my-text" id="c-box"></div>
+                <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text" id="f-box"></div>
               </div>
             </div>
           </div>
           
           <div class="row">
             <div class="container display-box">
-              <div class="row bg-warning">Condition</div>
-              <div class="row" id="condition-box"></div>
+              <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Condition</div>
+              <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text text-capitalize" id="condition-box"></div>
             </div>
           </div>
           
           <div class="row">
             <div class="container display-box">
-              <div class="row bg-warning">Other Info</div>
-              <div class="row" id="icon-box"></div>
+              <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Other Info</div>
+              <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text" id="icon-box"></div>
             </div>
           </div>
         </div>

@@ -1,7 +1,12 @@
 h1 {
   text-align: center;
-  padding-top: 5vh;
-  padding-bottom: 5vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+.my-text {
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .zip-input {
@@ -17,6 +22,38 @@ h1 {
   height: 75vh;
 }
 
+.weather-box {
+  border-style: dashed;
+  border-width: 3px;
+}
+
+.my-icon {
+  height: 20vh;
+  width: 20vh;
+}
+
 .display-box {
-  padding: 3vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 3vh;
+  padding-right: 3vh;
+}
+
+.my-border {
+  border: solid;
+  border-width: 2px;
+}
+
+.my-sub-border {
+  border: solid;
+  border-width: 2px;
+  border-top-width: 0px;
+}
+
+.border-center {
+  border: solid;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 2px;
+  border-right-width: 2px;
 }

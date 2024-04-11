@@ -45,7 +45,7 @@ async function getWeather() {
     
     const city = locationData.name
     const latitude = locationData.lat
-    const longitude = locationData.lon 
+    const longitude = locationData.lon
 
     //once we have our lat/lon, ping OpenWeather to get the weather data for the current moment
     const weatherData = await fetchWeather(latitude, longitude);
@@ -56,14 +56,34 @@ async function getWeather() {
     const icon = weatherData.weather[0].icon
     
     console.log("City: " + city)
-    fillTemperature(temperature)
+    console.log("Temperature: " + temperature)
     console.log("Condition: " + condition)
     console.log("Icon: " + icon)
 
     cityBox.textContent = city
+    fillTemperature(temperature)
     conditionBox.textContent = condition
-    iconBox.textContent = icon
+    fillImage(icon)
+}
 
+function clear_child_elements(parent_element) {
+    // clears the child elements of a given element
+  
+    const node_list = Array.from(parent_element.childNodes); //grab a copy of the array to iterate across
+    node_list.forEach((element) => element.remove());
+}
+
+function fillImage(iconCode) {
+    //URL is https://openweathermap.org/img/wn/${iconCode}@2x.png
+    
+    //delete any existing children of iconBox
+    clear_child_elements(iconBox)
+
+    //and then add an image element to it
+    let node = document.createElement("img")
+    node.classList.add("my-icon")
+    node.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`
+    iconBox.appendChild(node)
 }
 
 function fillTemperature(temperature) {
