@@ -1,9 +1,3 @@
-# Vanilla JS Bundler
+# Weather Forecast!
 
-A repo template built with Vite.  
-
-## To Run Locally
-* $ nvm use
-* $ npm install
-* $ npm run dev
-
+A simple app that will display the weather in an area when provided a ZIP code!
