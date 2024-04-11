@@ -34,15 +34,19 @@ async function getWeather() {
     let zip = zipInput.value
     console.log("ZIP Entered: " + zip)
 
-    //validate the zip code to make sure it's valid, display an error if it isn't
-    //TODO
-
     const country = "US"
 
     //ping OpenWeather to convert the zip code into latitude and longitude
     const locationData = await fetchLocation(zip, country);
     //data should be an Object with the following keys: zip, name, lat, lon, country
     
+    //validate our location data
+    if (locationData.cod) { //"cod" is their error property, if this is missing, then it's undefined, false, and fine
+        console.error("Bad ZIP code!")
+        showError("Bad ZIP code! Check what you've entered and try again!")
+        return
+    }
+
     const city = locationData.name
     const latitude = locationData.lat
     const longitude = locationData.lon
@@ -66,6 +70,14 @@ async function getWeather() {
     fillImage(icon)
 }
 
+function showError(message) {
+    //delete any existing children of iconBox
+    clear_child_elements(iconBox)
+
+    //change text content to the message
+    iconBox.textContent = message
+}
+
 function clear_child_elements(parent_element) {
     // clears the child elements of a given element
   
@@ -78,6 +90,7 @@ function fillImage(iconCode) {
     
     //delete any existing children of iconBox
     clear_child_elements(iconBox)
+    iconBox.textContent = "" //empty text content if there's an error
 
     //and then add an image element to it
     let node = document.createElement("img")
