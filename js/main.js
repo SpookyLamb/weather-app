@@ -28,17 +28,6 @@ let iconBox;
 const heading_classes = ["row", "bg-warning", "my-border", "d-flex", "justify-content-center", "align-items-center", "text-center", "align-middle", "fs-4", "fw-bold"]
 const text_classes = ["row", "bg-white", "my-sub-border", "d-flex", "justify-content-center", "align-items-center", "text-center", "align-middle", "my-text"]
 
-//const weatherBox = document.getElementById("weather-box");
-//const weatherButton = document.getElementById("weather-button");
-//const zipInput = document.getElementById("zip-input");
-
-// let kBox = document.getElementById("k-box");
-// let cBox = document.getElementById("c-box");
-// let fBox = document.getElementById("f-box");
-
-//let conditionBox = document.getElementById("condition-box");
-//let iconBox = document.getElementById("icon-box");
-
 export function init() {
     console.log("Initializing.")
     clear_child_elements(docBody)
@@ -70,13 +59,13 @@ function buildElement(tag, element_id, class_list, parent_node) {
 function buildPage() {
     //builds the basic page elements from top to bottom, adding them to the body
     
-//  <div id="app" class="container col-12 col-md-6 bg-white vh-100">
+    //  <div id="app" class="container col-12 col-md-6 bg-white vh-100">
     let node = buildElement("div", "app", ["container", "col-12", "col-md-6", "bg-white", "vh-100"], docBody)    
     appDiv = node
 
-//     <div class="row">
-//       <h1>Weather App</h1>
-//     </div>
+    //     <div class="row">
+    //       <h1>Weather App</h1>
+    //     </div>
 
     node = buildElement("div", "", ["row"], appDiv)
     
@@ -84,15 +73,15 @@ function buildPage() {
     node = buildElement("h1", "", [], parent)
     node.textContent = "Weather App"
 
-//     <div class="row input-field">
-//       <div class="col d-flex align-items-center justify-content-end">
-//         <label for="zip-input">ZIP:&nbsp;</label>
-//         <input type="text" id="zip-input" class="zip-input">
-//       </div>
-//       <div class="col d-flex align-items-center justify-content-start">
-//         <button type="button" id="weather-button" class="btn btn-primary">Get Weather</button>
-//       </div>
-//     </div>
+    //     <div class="row input-field">
+    //       <div class="col d-flex align-items-center justify-content-end">
+    //         <label for="zip-input">ZIP:&nbsp;</label>
+    //         <input type="text" id="zip-input" class="zip-input">
+    //       </div>
+    //       <div class="col d-flex align-items-center justify-content-start">
+    //         <button type="button" id="weather-button" class="btn btn-primary">Get Weather</button>
+    //       </div>
+    //     </div>
 
     node = buildElement("div", "", ["row", "input-field"], appDiv)
     
@@ -116,8 +105,8 @@ function buildPage() {
     node.textContent = "Get Weather"
     weatherButton = node
 
-//     <div class="row d-flex flex-column weather-wrapper">
-//       <div class="container d-flex flex-fill justify-content-start flex-column weather-box" id="weather-box">
+    //     <div class="row d-flex flex-column weather-wrapper">
+    //       <div class="container d-flex flex-fill justify-content-start flex-column weather-box" id="weather-box">
 
     node = buildElement("div", "", ["row", "d-flex", "flex-column", "weather-wrapper"], appDiv)
     
@@ -126,17 +115,38 @@ function buildPage() {
     weatherBox = node
 }
 
+function spawn_spinner() {
+    clear_child_elements(weatherBox)
+    
+    //<div class="d-flex justify-content-center">
+    //  <div class="spinner-border" role="status">
+    //      <span class="visually-hidden">Loading...</span>
+    //  </div>
+    //</div>
+
+    let node = buildElement("div", "", ["d-flex", "justify-content-center", "my-auto"], weatherBox)
+    let parent = node
+
+    node = buildElement("div", "", ["spinner-border"], parent)
+    node.role = "status"
+    parent = node
+
+    node = buildElement("span", "", ["visually-hidden"], parent)
+    node.textContent = "Loading..."
+
+}
+
 function buildWeatherDisplay() {
     //base parent is weatherBox
 
     clear_child_elements(weatherBox) //kill any existing elements
 
-//         <div class="row">
-//           <div class="container display-box">
-//             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">City</div>
-//             <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text" id="city-box"></div>
-//           </div>
-//         </div>
+    //         <div class="row">
+    //           <div class="container display-box">
+    //             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">City</div>
+    //             <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text" id="city-box"></div>
+    //           </div>
+    //         </div>
 
     let node = buildElement("div", "", ["row"], weatherBox)
     let parent = node
@@ -150,16 +160,16 @@ function buildWeatherDisplay() {
     node = buildElement("div", "city-box", text_classes, parent)
     cityBox = node
 
-//         <div class="row">
-//           <div class="container display-box">
-//             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Temperature</div>
-//             <div class="row bg-white my-sub-border">
-//               <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text" id="k-box"></div>
-//               <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text border-center" id="c-box"></div>
-//               <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text" id="f-box"></div>
-//             </div>
-//           </div>
-//         </div>
+    //         <div class="row">
+    //           <div class="container display-box">
+    //             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Temperature</div>
+    //             <div class="row bg-white my-sub-border">
+    //               <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text" id="k-box"></div>
+    //               <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text border-center" id="c-box"></div>
+    //               <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text" id="f-box"></div>
+    //             </div>
+    //           </div>
+    //         </div>
 
     node = buildElement("div", "", ["row"], weatherBox)
     parent = node
@@ -184,12 +194,12 @@ function buildWeatherDisplay() {
     node = buildElement("div", "f-box", temp_classes, parent)
     fBox = node
 
-//         <div class="row">
-//           <div class="container display-box">
-//             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Condition</div>
-//             <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text text-capitalize" id="condition-box"></div>
-//           </div>
-//         </div>
+    //         <div class="row">
+    //           <div class="container display-box">
+    //             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Condition</div>
+    //             <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text text-capitalize" id="condition-box"></div>
+    //           </div>
+    //         </div>
 
     node = buildElement("div", "", ["row"], weatherBox)
     parent = node
@@ -208,12 +218,12 @@ function buildWeatherDisplay() {
 }
 
 function buildIconBox() {
-//         <div class="row">
-//           <div class="container display-box">
-//             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Other Info</div>
-//             <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text" id="icon-box"></div>
-//           </div>
-//         </div>
+    //         <div class="row">
+    //           <div class="container display-box">
+    //             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Other Info</div>
+    //             <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text" id="icon-box"></div>
+    //           </div>
+    //         </div>
 
     let node = buildElement("div", "", ["row"], weatherBox)
     let parent = node
@@ -230,6 +240,8 @@ function buildIconBox() {
 
 async function getWeather() {
     //grab the info from zipInput, convert it to a number for a zip code
+    spawn_spinner() //spawn a spinner while we load
+
     let zip = zipInput.value
     console.log("ZIP Entered: " + zip)
 
