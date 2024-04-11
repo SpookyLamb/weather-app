@@ -16,40 +16,49 @@
       <div class="row">
         <h1>Weather App</h1>
       </div>
-      <div class="row">
-        <div class="col">
-          <label for="zip-input">ZIP Code:</label>
-          <input type="text" id="zip-input">
+
+      <div class="row input-field">
+        <div class="col d-flex align-items-center justify-content-end">
+          <label for="zip-input">ZIP:&nbsp;</label>
+          <input type="text" id="zip-input" class="zip-input">
         </div>
-        <div class="col">
+        <div class="col d-flex align-items-center justify-content-start">
           <button type="button" id="weather-button" class="btn btn-primary">Get Weather</button>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-12 bg-danger d-flex justify-content-evenly flex-column" id="weather-box">
+      <div class="row d-flex flex-column weather-wrapper">
+        <div class="container bg-danger d-flex flex-fill justify-content-around flex-column border border-dark weather-box" id="weather-box">
           <div class="row">
-            <div class="row bg-warning">City</div>
-            <div class="row" id="city-box"></div>
+            <div class="container display-box">
+              <div class="row bg-warning">City</div>
+              <div class="row" id="city-box"></div>
+            </div>
           </div>
 
           <div class="row">
-            <div class="row bg-warning">Temperature</div>
-            <div class="row">
-              <div class="col-4" id="k-box"></div>
-              <div class="col-4" id="c-box"></div>
-              <div class="col-4" id="f-box"></div>
+            <div class="container display-box">
+              <div class="row bg-warning">Temperature</div>
+              <div class="row">
+                <div class="col-4" id="k-box"></div>
+                <div class="col-4" id="c-box"></div>
+                <div class="col-4" id="f-box"></div>
+              </div>
             </div>
           </div>
           
           <div class="row">
-            <div class="row bg-warning">Condition</div>
-            <div class="row" id="condition-box"></div>
+            <div class="container display-box">
+              <div class="row bg-warning">Condition</div>
+              <div class="row" id="condition-box"></div>
+            </div>
           </div>
           
           <div class="row">
-            <div class="row bg-warning">Other Info</div>
-            <div class="row" id="icon-box"></div>
+            <div class="container display-box">
+              <div class="row bg-warning">Other Info</div>
+              <div class="row" id="icon-box"></div>
+            </div>
           </div>
         </div>
       </div>

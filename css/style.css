@@ -1,3 +1,22 @@
 h1 {
-  color: pink;
+  text-align: center;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+}
+
+.zip-input {
+  width: 60px;
+}
+
+.input-field {
+  padding-bottom: 3vh;
+}
+
+.weather-wrapper {
+  padding: 1vh;
+  height: 75vh;
+}
+
+.display-box {
+  padding: 3vh;
 }

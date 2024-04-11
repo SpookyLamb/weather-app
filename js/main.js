@@ -37,7 +37,7 @@ async function getWeather() {
     //validate the zip code to make sure it's valid, display an error if it isn't
     //TODO
 
-    let country = "US"
+    const country = "US"
 
     //ping OpenWeather to convert the zip code into latitude and longitude
     const locationData = await fetchLocation(zip, country);
