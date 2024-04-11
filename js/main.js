@@ -30,9 +30,19 @@ const text_classes = ["row", "bg-white", "my-sub-border", "d-flex", "justify-con
 
 export function init() {
     console.log("Initializing.")
-    clear_child_elements(docBody)
     buildPage()
-    weatherButton.addEventListener("click", getWeather);
+    weatherButton.addEventListener("click", getZipWeather);
+    getLocation() //try to get the user's position, if they let us
+}
+
+function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(weatherPosition);
+    }
+}
+  
+function weatherPosition(position) {
+    getLocalWeather(position.coords.latitude, position.coords.longitude)
 }
 
 function buildElement(tag, element_id, class_list, parent_node) {
@@ -238,7 +248,40 @@ function buildIconBox() {
     iconBox = node
 }
 
-async function getWeather() {
+async function getWeather(latitude, longitude, city) {
+    //lat and lon are coordinate numbers, city is a string
+
+    const weatherData = await fetchWeather(latitude, longitude);
+    //data should be an Object with a whole mess of information, the important ones are city, temp, condition, and the icon
+
+    buildWeatherDisplay()
+
+    const temperature = weatherData.main.temp //kelvin by default, is a string
+    const condition = weatherData.weather[0].description //grabs a more precise description, eg "light rain"
+    const icon = weatherData.weather[0].icon
+    
+    console.log("City: " + city)
+    console.log("Temperature: " + temperature)
+    console.log("Condition: " + condition)
+    console.log("Icon: " + icon)
+
+    cityBox.textContent = city
+    fillTemperature(temperature)
+    conditionBox.textContent = condition
+    fillImage(icon)
+}
+
+async function getLocalWeather(latitude, longitude) {
+    //lat and lon are numbers
+    spawn_spinner() //spawn a spinner while we load
+
+    const cityData = await fetchCity(latitude, longitude)
+    const city = cityData[0].name
+
+    getWeather(latitude, longitude, city)
+}
+
+async function getZipWeather() {
     //grab the info from zipInput, convert it to a number for a zip code
     spawn_spinner() //spawn a spinner while we load
 
@@ -265,24 +308,7 @@ async function getWeather() {
     const longitude = locationData.lon
 
     //once we have our lat/lon, ping OpenWeather to get the weather data for the current moment
-    const weatherData = await fetchWeather(latitude, longitude);
-    //data should be an Object with a whole mess of information, the important ones are city, temp, condition, and the icon
-
-    buildWeatherDisplay()
-
-    const temperature = weatherData.main.temp //kelvin by default, is a string
-    const condition = weatherData.weather[0].description //grabs a more precise description, eg "light rain"
-    const icon = weatherData.weather[0].icon
-    
-    console.log("City: " + city)
-    console.log("Temperature: " + temperature)
-    console.log("Condition: " + condition)
-    console.log("Icon: " + icon)
-
-    cityBox.textContent = city
-    fillTemperature(temperature)
-    conditionBox.textContent = condition
-    fillImage(icon)
+    getWeather(latitude, longitude, city)
 }
 
 function showError(message) {
@@ -327,6 +353,21 @@ function fillTemperature(temperature) {
     cBox.textContent = celsius + " C"
     fBox.textContent = fahrenheit + " F"
     kBox.textContent = kelvin + " K"
+}
+
+async function fetchCity(latitude, longitude) {
+    //API call made with http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}
+    const limit = 1
+    const apiUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=${limit}&appid=${API_key}`
+
+    try {
+        const response = await fetch(apiUrl) 
+        const data = await response.json()
+        console.log('Raw city data: ', data)
+        return data
+    } catch (error) {
+        console.log('Error: ', error)
+    }
 }
 
 async function fetchLocation(zip, country) {
