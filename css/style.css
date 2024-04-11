@@ -25,6 +25,7 @@ h1 {
 .weather-box {
   border-style: dashed;
   border-width: 3px;
+  max-height: 700px;
 }
 
 .my-icon {
