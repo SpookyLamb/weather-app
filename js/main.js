@@ -10,25 +10,224 @@
 
 const API_key = "f4cf630ad5da60d93c24ed78932800cb";
 
-const weatherBox = document.getElementById("weather-box");
-const weatherButton = document.getElementById("weather-button");
-const zipInput = document.getElementById("zip-input");
+const docBody = document.getElementById("body");
 
-let cityBox = document.getElementById("city-box");
+//global vars for subdivisions
+let appDiv;
+let weatherButton;
+let zipInput;
+let weatherBox;
+let cityBox;
+let kBox;
+let cBox;
+let fBox;
+let conditionBox;
+let iconBox;
 
-let temperatureBox = document.getElementById("temperature-box");
-let kBox = document.getElementById("k-box");
-let cBox = document.getElementById("c-box");
-let fBox = document.getElementById("f-box");
+//common classes
+const heading_classes = ["row", "bg-warning", "my-border", "d-flex", "justify-content-center", "align-items-center", "text-center", "align-middle", "fs-4", "fw-bold"]
+const text_classes = ["row", "bg-white", "my-sub-border", "d-flex", "justify-content-center", "align-items-center", "text-center", "align-middle", "my-text"]
 
-let conditionBox = document.getElementById("condition-box");
-let iconBox = document.getElementById("icon-box");
+//const weatherBox = document.getElementById("weather-box");
+//const weatherButton = document.getElementById("weather-button");
+//const zipInput = document.getElementById("zip-input");
+
+// let kBox = document.getElementById("k-box");
+// let cBox = document.getElementById("c-box");
+// let fBox = document.getElementById("f-box");
+
+//let conditionBox = document.getElementById("condition-box");
+//let iconBox = document.getElementById("icon-box");
 
 export function init() {
     console.log("Initializing.")
+    clear_child_elements(docBody)
+    buildPage()
     weatherButton.addEventListener("click", getWeather);
 }
+
+function buildElement(tag, element_id, class_list, parent_node) {
+    //takes tag (string), class_list (array of strings), element_id (string)
+    //return the created node to be used elsewhere
+
+    let node = document.createElement(tag)
+
+    if (element_id) { //empty string is ignored
+        node.id = element_id
+    }
+
+    if (class_list.length > 0) { //empty array is ignored
+        for (let i = 0; i < class_list.length; i++) {
+            node.classList.add( class_list[i] )
+        }
+    }
+
+    parent_node.appendChild(node)
+
+    return node
+}
+
+function buildPage() {
+    //builds the basic page elements from top to bottom, adding them to the body
     
+//  <div id="app" class="container col-12 col-md-6 bg-white vh-100">
+    let node = buildElement("div", "app", ["container", "col-12", "col-md-6", "bg-white", "vh-100"], docBody)    
+    appDiv = node
+
+//     <div class="row">
+//       <h1>Weather App</h1>
+//     </div>
+
+    node = buildElement("div", "", ["row"], appDiv)
+    
+    let parent = node
+    node = buildElement("h1", "", [], parent)
+    node.textContent = "Weather App"
+
+//     <div class="row input-field">
+//       <div class="col d-flex align-items-center justify-content-end">
+//         <label for="zip-input">ZIP:&nbsp;</label>
+//         <input type="text" id="zip-input" class="zip-input">
+//       </div>
+//       <div class="col d-flex align-items-center justify-content-start">
+//         <button type="button" id="weather-button" class="btn btn-primary">Get Weather</button>
+//       </div>
+//     </div>
+
+    node = buildElement("div", "", ["row", "input-field"], appDiv)
+    
+    parent = node
+    node = buildElement("div", "", ["col", "d-flex", "align-items-center", "justify-content-end"], parent)
+    
+    let col = node
+    node = buildElement("label", "", [], col)
+    node.for = "zip-input"
+    node.innerHTML = "ZIP:&nbsp;"
+
+    node = buildElement("input", "zip-input", ["zip-input"], col)
+    node.type = "text"
+    zipInput = node
+
+    node = buildElement("div", "", ["col", "d-flex", "align-items-center", "justify-content-start"], parent)
+    col = node
+
+    node = buildElement("button", "weather-button", ["btn", "btn-primary"], col)
+    node.type = "button"
+    node.textContent = "Get Weather"
+    weatherButton = node
+
+//     <div class="row d-flex flex-column weather-wrapper">
+//       <div class="container d-flex flex-fill justify-content-start flex-column weather-box" id="weather-box">
+
+    node = buildElement("div", "", ["row", "d-flex", "flex-column", "weather-wrapper"], appDiv)
+    
+    parent = node
+    node = buildElement("div", "weather-box", ["container", "d-flex", "flex-fill", "justify-content-start", "flex-column", "weather-box"], parent)
+    weatherBox = node
+}
+
+function buildWeatherDisplay() {
+    //base parent is weatherBox
+
+    clear_child_elements(weatherBox) //kill any existing elements
+
+//         <div class="row">
+//           <div class="container display-box">
+//             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">City</div>
+//             <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text" id="city-box"></div>
+//           </div>
+//         </div>
+
+    let node = buildElement("div", "", ["row"], weatherBox)
+    let parent = node
+
+    node = buildElement("div", "", ["container", "display-box"], parent)
+    parent = node
+
+    node = buildElement("div", "", heading_classes, parent)
+    node.textContent = "City"
+
+    node = buildElement("div", "city-box", text_classes, parent)
+    cityBox = node
+
+//         <div class="row">
+//           <div class="container display-box">
+//             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Temperature</div>
+//             <div class="row bg-white my-sub-border">
+//               <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text" id="k-box"></div>
+//               <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text border-center" id="c-box"></div>
+//               <div class="col-4 d-flex justify-content-center align-items-center text-center align-middle my-text" id="f-box"></div>
+//             </div>
+//           </div>
+//         </div>
+
+    node = buildElement("div", "", ["row"], weatherBox)
+    parent = node
+
+    node = buildElement("div", "", ["container", "display-box"], parent)
+    parent = node
+
+    node = buildElement("div", "", heading_classes, parent)
+    node.textContent = "Temperature"
+
+    node = buildElement("div", "", ["row", "bg-white", "my-sub-border"], parent)
+    parent = node
+
+    const temp_classes = ["col-4", "d-flex", "justify-content-center", "align-items-center", "text-center", "align-middle", "my-text"]
+    node = buildElement("div", "k-box", temp_classes, parent)
+    kBox = node
+
+    node = buildElement("div", "c-box", temp_classes, parent)
+    cBox = node
+    cBox.classList.add("border-center") //extra class
+
+    node = buildElement("div", "f-box", temp_classes, parent)
+    fBox = node
+
+//         <div class="row">
+//           <div class="container display-box">
+//             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Condition</div>
+//             <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text text-capitalize" id="condition-box"></div>
+//           </div>
+//         </div>
+
+    node = buildElement("div", "", ["row"], weatherBox)
+    parent = node
+
+    node = buildElement("div", "", ["container", "display-box"], parent)
+    parent = node
+
+    node = buildElement("div", "", heading_classes, parent)
+    node.textContent = "Condition"
+
+    node = buildElement("div", "condition-box", text_classes, parent)
+    node.classList.add("text-capitalize")
+    conditionBox = node
+
+    buildIconBox()
+}
+
+function buildIconBox() {
+//         <div class="row">
+//           <div class="container display-box">
+//             <div class="row bg-warning my-border d-flex justify-content-center align-items-center text-center align-middle fs-4 fw-bold">Other Info</div>
+//             <div class="row bg-white my-sub-border d-flex justify-content-center align-items-center text-center align-middle my-text" id="icon-box"></div>
+//           </div>
+//         </div>
+
+    let node = buildElement("div", "", ["row"], weatherBox)
+    let parent = node
+
+    node = buildElement("div", "", ["container", "display-box"], parent)
+    parent = node
+
+    node = buildElement("div", "", heading_classes, parent)
+    node.textContent = "Other Info"
+
+    node = buildElement("div", "icon-box", text_classes, parent)
+    iconBox = node
+}
+
 async function getWeather() {
     //grab the info from zipInput, convert it to a number for a zip code
     let zip = zipInput.value
@@ -43,6 +242,8 @@ async function getWeather() {
     //validate our location data
     if (locationData.cod) { //"cod" is their error property, if this is missing, then it's undefined, false, and fine
         console.error("Bad ZIP code!")
+        clear_child_elements(weatherBox) //unbuild
+        buildIconBox() //rebuild
         showError("Bad ZIP code! Check what you've entered and try again!")
         return
     }
@@ -54,6 +255,8 @@ async function getWeather() {
     //once we have our lat/lon, ping OpenWeather to get the weather data for the current moment
     const weatherData = await fetchWeather(latitude, longitude);
     //data should be an Object with a whole mess of information, the important ones are city, temp, condition, and the icon
+
+    buildWeatherDisplay()
 
     const temperature = weatherData.main.temp //kelvin by default, is a string
     const condition = weatherData.weather[0].description //grabs a more precise description, eg "light rain"
