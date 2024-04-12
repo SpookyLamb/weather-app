@@ -356,9 +356,9 @@ function fillTemperature(temperature) {
 }
 
 async function fetchCity(latitude, longitude) {
-    //API call made with http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}
+    //API call made with https://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}
     const limit = 1
-    const apiUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=${limit}&appid=${API_key}`
+    const apiUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=${limit}&appid=${API_key}`
 
     try {
         const response = await fetch(apiUrl) 
@@ -371,8 +371,8 @@ async function fetchCity(latitude, longitude) {
 }
 
 async function fetchLocation(zip, country) {
-    //API call made with http://api.openweathermap.org/geo/1.0/zip?zip={zip code},{country code}&appid={API key}
-    const apiUrl = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip},${country}&appid=${API_key}`
+    //API call made with https://api.openweathermap.org/geo/1.0/zip?zip={zip code},{country code}&appid={API key}
+    const apiUrl = `https://api.openweathermap.org/geo/1.0/zip?zip=${zip},${country}&appid=${API_key}`
 
     try {
         const response = await fetch(apiUrl) 
